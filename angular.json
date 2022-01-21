@@ -101,7 +101,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "openTok-T1/src/assets/openTok.js"
+            ]
           }
         }
       }

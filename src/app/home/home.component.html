@@ -1,0 +1,20 @@
+
+<div id="videos">
+  <div id="subscriber"></div>
+  <div id="publisher"></div>
+  <div id="screen-preview"></div>
+</div>
+
+<div class="call-controls">
+  <button *ngIf="!callConnected" class="connect" (click)="startCall()"><i
+      class="icon  start-call fas fa-phone-alt"></i></button>
+  <i *ngIf="!isVideoOn " class="icon fas fa-video" (click)="toggleVideo()"></i>
+  <i *ngIf="isVideoOn" class="icon fas fa-video-slash" (click)="toggleVideo()"></i>
+  <i *ngIf="!isMicOn" class="icon fas fa-microphone" (click)="toggleMic()"></i>
+  <i *ngIf="isMicOn" class="icon fas fa-microphone-slash" (click)="toggleMic()"></i>
+  <i [ngClass]="{'on-active': startShare}" class="icon fas fa-share-square" (click)="startScreenShare()"></i>
+  <i *ngIf="callConnected" class="icon far fa-stop-circle" (click)="stopShare()"></i>
+  <i *ngIf="callConnected" class="icon fas fa-user-plus" (click)="addSub()"></i>
+  <button *ngIf="callConnected" class="disconnect" (click)="endCall()"><i
+      class="icon end-call fas fa-phone-alt"></i></button>
+</div>
