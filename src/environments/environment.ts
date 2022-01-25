@@ -3,7 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebaseConfig : {
+    apiKey: "AIzaSyBT4IbSREiLYOh8tuat1nEr39IFLiqhedM",
+    authDomain: "opentok-archive.firebaseapp.com",
+    projectId: "opentok-archive",
+    storageBucket: "opentok-archive.appspot.com",
+    messagingSenderId: "506680134260",
+    appId: "1:506680134260:web:a01cccba0ae3f5241bdf21"
+  }
+
 };
 
 /*

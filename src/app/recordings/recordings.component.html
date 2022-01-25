@@ -1,0 +1,13 @@
+<div class="container">
+  <mat-card class='recording-list' *ngFor="let recording of recordings ">
+    <div class="recording">
+      <a href="https://onebucket1b.s3.ap-south-1.amazonaws.com/47430891/{{recording.name}}
+      ">
+        <mat-icon>play_circle_filled</mat-icon>
+          <h3>
+            {{recording.name}}.mp4
+          </h3>
+      </a>
+    </div>
+  </mat-card>
+</div>
