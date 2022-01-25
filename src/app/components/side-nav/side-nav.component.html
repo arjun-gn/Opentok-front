@@ -1,4 +1,4 @@
-<mat-drawer-container [class.drawer-opened]="drawer.opened" class="example-container">
+<!-- <mat-drawer-container [class.drawer-opened]="drawer.opened" class="example-container">
   <mat-drawer #drawer class="drawer" mode="side" opened="false">
     <mat-toolbar class="header">
       <div>Menu</div>
@@ -19,10 +19,36 @@
     </div>
   </mat-drawer>
 
-  <mat-toolbar class="main header">
-    <mat-icon *ngIf="!drawer.opened" (click)="drawer.toggle()">
+
+  <mat-drawer-content>
+
+
+  </mat-drawer-content>
+
+</mat-drawer-container> -->
+<mat-drawer-container class="example-container">
+  <mat-drawer #drawer  mode="side" opened> <mat-toolbar class="header">
+    <div>Menu</div>
+    <mat-icon class="close" (click)="drawer.toggle()">close</mat-icon>
+  </mat-toolbar>
+
+  <div class="contents">
+    <button mat-button [routerLink]="['home']" (click)="drawer.toggle()">
+      <mat-icon>
+        home
+      </mat-icon>Home
+    </button>
+    <button mat-button [routerLink]="['recordings']" (click)="drawer.toggle()">
+      <mat-icon>
+        music_video
+      </mat-icon>Show Recordings
+    </button>
+  </div></mat-drawer>
+
+  <mat-drawer-content class="drawer-content">
+    <mat-icon (click)="drawer.toggle()">
       menu
     </mat-icon>
-    <div>Header</div>
-  </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
 </mat-drawer-container>

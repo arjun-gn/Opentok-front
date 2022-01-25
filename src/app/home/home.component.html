@@ -1,10 +1,9 @@
-<div *ngIf="!callConnected" class="empty-container">
-  <h2>Start a Meeting</h2>
-</div>
-<div id="videos">
+
+<div id="videos" #meetingContainer>
+
+  <!-- <div id="screen-preview"></div>
   <div id="subscriber"></div>
-  <div id="publisher"></div>
-  <div id="screen-preview"></div>
+  <div id="publisher"></div> -->
 </div>
 
 <div class="call-controls">
@@ -18,8 +17,6 @@
     #tooltip="matTooltip" matTooltip="Share Screen"></i>
   <i *ngIf="callConnected && startShare" [ngClass]="{'icon-inactive': startShare}" class="icon fas fa-share-square"
     (click)="stopShare()" #tooltip="matTooltip" matTooltip="Stop Sharing"></i>
-  <i *ngIf="callConnected" class="icon fas fa-user-plus" (click)="addSub()" #tooltip="matTooltip"
-    matTooltip="Add Subscriber"></i>
   <i *ngIf="callConnected" class="icon far fa-stop-circle"
     [ngClass]="{'icon-inactive': startRecord,'blink':startRecord}" (click)="record()" #tooltip="matTooltip"
     matTooltip="Archive"></i>

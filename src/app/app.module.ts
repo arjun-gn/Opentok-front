@@ -11,6 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { HttpClientModule } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -32,6 +33,7 @@ import { RecordingsComponent } from './recordings/recordings.component';
     MatButtonModule,
     MatToolbarModule,
     MatTooltipModule,
+    HttpClientModule,
     MatIconModule,
     MatCardModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
