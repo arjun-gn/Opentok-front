@@ -1,0 +1,25 @@
+.container {
+  position: absolute;
+  top: 15%;
+  left: 5%;
+  display: flex;
+
+  .recording-list {
+    margin: 20px;
+    width: 20%;
+    overflow: hidden;
+    .recording {
+      h3 {
+        color: rgb(37, 32, 32);
+      }
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 10px;
+      mat-icon {
+        color: rgb(51, 143, 204);
+        font-size: 90px;
+        margin-bottom: 70px;
+      }
+    }
+  }
+}
