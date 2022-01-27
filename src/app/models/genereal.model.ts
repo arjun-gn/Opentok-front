@@ -5,3 +5,9 @@ export interface Session {
   focusStreamId: string
   layout: string
 }
+export interface ContactModel {
+  name: string;
+  position: number;
+  phone: number;
+  email: string;
+}

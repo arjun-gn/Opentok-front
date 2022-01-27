@@ -1,5 +1,5 @@
-<!-- <mat-drawer-container [class.drawer-opened]="drawer.opened" class="example-container">
-  <mat-drawer #drawer class="drawer" mode="side" opened="false">
+<mat-drawer-container class="example-container">
+  <mat-drawer #drawer mode="side" opened>
     <mat-toolbar class="header">
       <div>Menu</div>
       <mat-icon class="close" (click)="drawer.toggle()">close</mat-icon>
@@ -16,34 +16,13 @@
           music_video
         </mat-icon>Show Recordings
       </button>
+      <button mat-button [routerLink]="['contact-list']" (click)="drawer.toggle()">
+        <mat-icon>
+          contact_mail
+        </mat-icon>Contacts
+      </button>
     </div>
   </mat-drawer>
-
-
-  <mat-drawer-content>
-
-
-  </mat-drawer-content>
-
-</mat-drawer-container> -->
-<mat-drawer-container class="example-container">
-  <mat-drawer #drawer  mode="side" opened> <mat-toolbar class="header">
-    <div>Menu</div>
-    <mat-icon class="close" (click)="drawer.toggle()">close</mat-icon>
-  </mat-toolbar>
-
-  <div class="contents">
-    <button mat-button [routerLink]="['home']" (click)="drawer.toggle()">
-      <mat-icon>
-        home
-      </mat-icon>Home
-    </button>
-    <button mat-button [routerLink]="['recordings']" (click)="drawer.toggle()">
-      <mat-icon>
-        music_video
-      </mat-icon>Show Recordings
-    </button>
-  </div></mat-drawer>
 
   <mat-drawer-content class="drawer-content">
     <mat-icon (click)="drawer.toggle()">

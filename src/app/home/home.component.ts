@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Session } from '../models/genereal.model';
 import { FirebaseService } from '../services/firebase.service';
 import { OpentokService } from '../services/opentok.service';
-import { LAYOUT_OPTIONS } from './layout.model';
+import { LAYOUT_OPTIONS } from '../models/layout.model';
 
 @Component({
   selector: 'app-home',
@@ -38,8 +38,6 @@ export class HomeComponent implements OnInit {
     var layoutContainer = document.getElementById('layoutContainer');
     // Initialize the layout container and get a reference to the layout method
     // var layout = initLayoutContainer(layoutContainer).layout;
-
-    // this.addRecording();
 
     this.opentokService.getSession().subscribe((res) => {
       this.sessionData = res;
@@ -76,6 +74,27 @@ export class HomeComponent implements OnInit {
       maxRatio: 3 / 2,
       minRatio: 9 / 16,
       fixedRatio: false,
+      scaleLastRow: true,
+      alignItems: 'center',
+      bigClass: 'OT_big',
+      bigPercentage: 0.8,
+      minBigPercentage: 0,
+      bigFixedRatio: false,
+      bigScaleLastRow: true,
+      bigAlignItems: 'center',
+      smallAlignItems: 'center',
+      maxWidth: Infinity,
+      maxHeight: Infinity,
+      smallMaxWidth: Infinity,
+      smallMaxHeight: Infinity,
+      bigMaxWidth: Infinity,
+      bigMaxHeight: Infinity,
+      bigMaxRatio: 3 / 2,
+      bigMinRatio: 9 / 16,
+      bigFirst: true,
+      animate: true,
+      window: window,
+      ignoreClass: 'OT_ignore',
     });
     layout.layout();
   }
@@ -86,6 +105,8 @@ export class HomeComponent implements OnInit {
     } else {
       this.isVideoOn = !this.isVideoOn;
       this.subscriber && this.subscriber.subscribeToVideo(this.isVideoOn);
+      this.publisher && this.publisher.publishVideo(this.isVideoOn);
+
     }
   }
 
@@ -95,7 +116,9 @@ export class HomeComponent implements OnInit {
       this.toggleVideo();
     } else {
       this.isMicOn = !this.isMicOn;
-      this.subscriber && this.subscriber.subscribeToAudio(this.isMicOn);
+      // this.subscriber && this.subscriber.subscribeToAudio(this.isMicOn);
+      this.publisher && this.publisher.publishAudio(this.isMicOn);
+
     }
   }
 
@@ -104,7 +127,12 @@ export class HomeComponent implements OnInit {
     // Create a publisher
     this.publisher = OT.initPublisher(
       'videos',
-      { insertMode: 'append' },
+      {
+        name:"arjun",
+        publishAudio: true,
+        publishVideo: false,
+        insertMode: 'append',
+      },
       (err) => {
         if (!err) {
           this.addSub();
@@ -140,13 +168,12 @@ export class HomeComponent implements OnInit {
       this.opentokService.startArchiving().subscribe((res) => {
         this.archiveResponse = res;
         this.archiveId = this.archiveResponse.id;
-        console.log(res);
       });
     } else {
       console.log(this.archiveId);
 
       this.opentokService.stopArchiving(this.archiveId).subscribe((res) => {
-        console.log(res);
+        this.addRecording(this.archiveId);
         this.archiveId = '';
       });
     }
@@ -200,9 +227,9 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  addRecording() {
+  addRecording(archiveId: string) {
     this.firebaseService
-      .create({ name: 'sad54654gd64s4ga45gs4dg3/archive.mp4' })
+      .create({ name: `${archiveId}/archive.mp4` })
       .then(() => {
         console.log('Created new item successfully!');
       });

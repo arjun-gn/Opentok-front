@@ -21,8 +21,8 @@ export const LAYOUT_OPTIONS= {
   bigMinRatio: 9/16,
   bigFirst: true,
 
-  animate: true,
+
   window: window,
   ignoreClass: 'OT_ignore',
-  onLayout: null,             
+  onLayout: null,
 };
