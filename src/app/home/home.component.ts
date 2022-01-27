@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import * as OT from '@opentok/client';
+import initLayoutContainer from 'opentok-layout-js';
+import { environment } from 'src/environments/environment';
+import { Session } from '../models/genereal.model';
 import { FirebaseService } from '../services/firebase.service';
+import { OpentokService } from '../services/opentok.service';
+import { LAYOUT_OPTIONS } from '../models/layout.model';
 
 @Component({
   selector: 'app-home',
@@ -8,11 +13,10 @@ import { FirebaseService } from '../services/firebase.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  apiKey = '47430891';
-  sessionId =
-    '1_MX40NzQzMDg5MX5-MTY0MzA4NDk2NTg1MH5HTnVMbk5SbERqZm5IbGlGNi9IWjBaZ25-fg';
-  token =
-    'T1==cGFydG5lcl9pZD00NzQzMDg5MSZzaWc9MTlmZWZhZDg2MWM5ODQ2NjA3MWE5NzllZDdhNGRjNWQ4YTU2NWRmYTpzZXNzaW9uX2lkPTFfTVg0ME56UXpNRGc1TVg1LU1UWTBNekE0TkRrMk5UZzFNSDVIVG5WTWJrNVNiRVJxWm01SWJHbEdOaTlJV2pCYVoyNS1mZyZjcmVhdGVfdGltZT0xNjQzMDg0OTkzJm5vbmNlPTAuMTA1MDg3NjczNTEyNjE4NzImcm9sZT1wdWJsaXNoZXImZXhwaXJlX3RpbWU9MTY0MzEwNjU5MiZpbml0aWFsX2xheW91dF9jbGFzc19saXN0PQ==';
+  @ViewChild('meetingContainer') meetingContainer!: ElementRef<HTMLElement>;
+  apiKey!: string;
+  sessionId!: string;
+  token!: string;
   session: any;
   publisher: any;
   callConnected: boolean = false;
@@ -22,16 +26,78 @@ export class HomeComponent implements OnInit {
   startRecord: boolean = false;
   subscriber: any;
   screenShare: any;
+  sessionData!: any;
+  archiveResponse!: any;
+  archiveId!: string;
+  constructor(
+    private firebaseService: FirebaseService,
+    private opentokService: OpentokService
+  ) {}
+
   ngOnInit(): void {
     var layoutContainer = document.getElementById('layoutContainer');
     // Initialize the layout container and get a reference to the layout method
     // var layout = initLayoutContainer(layoutContainer).layout;
 
-    this.initializeSession();
-    // this.addRecording();
+    this.opentokService.getSession().subscribe((res) => {
+      this.sessionData = res;
+      this.sessionId = this.sessionData.sessionId;
+      this.token = this.sessionData.token;
+      this.apiKey = this.sessionData.apiKey;
+      this.initializeSession();
+    });
   }
 
-  constructor(private firebaseService: FirebaseService) {}
+  initializeSession() {
+    this.session = OT.initSession(this.apiKey, this.sessionId);
+    const callOptions = {
+      subscribeToAudio: true,
+      subscribeToVideo: true,
+      insertMode: 'append',
+    };
+    // Subscribe to a newly created stream
+    this.session.on('streamCreated', (event: any) => {
+      console.log(event);
+      this.adjustLayOut();
+
+      this.subscriber = this.session.subscribe(
+        event.stream,
+        'videos',
+        callOptions,
+        this.handleError
+      );
+    });
+  }
+
+  adjustLayOut() {
+    const layout = initLayoutContainer(this.meetingContainer.nativeElement, {
+      maxRatio: 3 / 2,
+      minRatio: 9 / 16,
+      fixedRatio: false,
+      scaleLastRow: true,
+      alignItems: 'center',
+      bigClass: 'OT_big',
+      bigPercentage: 0.8,
+      minBigPercentage: 0,
+      bigFixedRatio: false,
+      bigScaleLastRow: true,
+      bigAlignItems: 'center',
+      smallAlignItems: 'center',
+      maxWidth: Infinity,
+      maxHeight: Infinity,
+      smallMaxWidth: Infinity,
+      smallMaxHeight: Infinity,
+      bigMaxWidth: Infinity,
+      bigMaxHeight: Infinity,
+      bigMaxRatio: 3 / 2,
+      bigMinRatio: 9 / 16,
+      bigFirst: true,
+      animate: true,
+      window: window,
+      ignoreClass: 'OT_ignore',
+    });
+    layout.layout();
+  }
 
   toggleVideo() {
     if (!this.callConnected) {
@@ -39,6 +105,8 @@ export class HomeComponent implements OnInit {
     } else {
       this.isVideoOn = !this.isVideoOn;
       this.subscriber && this.subscriber.subscribeToVideo(this.isVideoOn);
+      this.publisher && this.publisher.publishVideo(this.isVideoOn);
+
     }
   }
 
@@ -48,16 +116,28 @@ export class HomeComponent implements OnInit {
       this.toggleVideo();
     } else {
       this.isMicOn = !this.isMicOn;
-      this.subscriber && this.subscriber.subscribeToAudio(this.isMicOn);
+      // this.subscriber && this.subscriber.subscribeToAudio(this.isMicOn);
+      this.publisher && this.publisher.publishAudio(this.isMicOn);
+
     }
   }
+
   startCall() {
     this.callConnected = true;
     // Create a publisher
     this.publisher = OT.initPublisher(
-      'publisher',
-      { insertMode: 'append' },
-      this.handleError
+      'videos',
+      {
+        name:"arjun",
+        publishAudio: true,
+        publishVideo: false,
+        insertMode: 'append',
+      },
+      (err) => {
+        if (!err) {
+          this.addSub();
+        }
+      }
     );
   }
 
@@ -72,6 +152,7 @@ export class HomeComponent implements OnInit {
         this.handleError(error);
       } else {
         this.session.publish(this.publisher, this.handleError);
+        this.adjustLayOut();
       }
     });
   }
@@ -83,12 +164,24 @@ export class HomeComponent implements OnInit {
 
   record() {
     this.startRecord = !this.startRecord;
-    //recording api
+    if (this.startRecord == true) {
+      this.opentokService.startArchiving().subscribe((res) => {
+        this.archiveResponse = res;
+        this.archiveId = this.archiveResponse.id;
+      });
+    } else {
+      console.log(this.archiveId);
+
+      this.opentokService.stopArchiving(this.archiveId).subscribe((res) => {
+        this.addRecording(this.archiveId);
+        this.archiveId = '';
+      });
+    }
   }
 
   endCall() {
+    if (this.startRecord) this.record();
     this.publisher.destroy();
-    // this.session && this.session.unpublish(this.publisher);
     this.session && this.session.disconnect();
     this.isMicOn = true;
     this.isVideoOn = true;
@@ -96,7 +189,6 @@ export class HomeComponent implements OnInit {
     this.startShare = false;
     this.startRecord = false;
   }
-
 
   handleError(error: any) {
     if (error) {
@@ -115,7 +207,7 @@ export class HomeComponent implements OnInit {
         // Screen sharing is available. Publish the screen.
 
         this.screenShare = OT.initPublisher(
-          'screen-preview',
+          'videos',
           { videoSource: 'screen', insertMode: 'append' },
           (error) => {
             if (error) {
@@ -125,8 +217,8 @@ export class HomeComponent implements OnInit {
                 if (error) {
                   console.log(error);
                   // } else {
-                  this.startShare = true;
                 }
+                this.startShare = true;
               });
             }
           }
@@ -135,30 +227,9 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  initializeSession() {
-    this.session = OT.initSession(this.apiKey, this.sessionId);
-    const callOptions = { subscribeToAudio: true, subscribeToVideo: true };
-    // Subscribe to a newly created stream
-    this.session.on('streamCreated', (event: any) => {
-      console.log(
-        '/////////' + event.stream.id,
-        event.stream.name,
-        event.stream.videoType,
-        event.stream.layoutClassList
-      );
-
-      this.subscriber = this.session.subscribe(
-        event.stream,
-        'layoutContainer',
-        callOptions,
-        this.handleError
-      );
-    });
-  }
-
-  addRecording() {
+  addRecording(archiveId: string) {
     this.firebaseService
-      .create({ name: 'sad54654gd64s4ga45gs4dg3/archive.mp4' })
+      .create({ name: `${archiveId}/archive.mp4` })
       .then(() => {
         console.log('Created new item successfully!');
       });

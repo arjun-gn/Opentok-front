@@ -11,11 +11,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { HttpClientModule } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { RecordingsComponent } from './recordings/recordings.component';
+import { RecordingsComponent } from './pages/recordings/recordings.component';
+import { MatTableModule } from '@angular/material/table';
+import { ContactListComponent } from './pages/contact-list/contact-list.component';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -23,6 +27,7 @@ import { RecordingsComponent } from './recordings/recordings.component';
     HomeComponent,
     AppComponent,
     RecordingsComponent,
+    ContactListComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,6 +37,9 @@ import { RecordingsComponent } from './recordings/recordings.component';
     MatButtonModule,
     MatToolbarModule,
     MatTooltipModule,
+    MatTableModule,
+    MatSortModule,
+    HttpClientModule,
     MatIconModule,
     MatCardModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),

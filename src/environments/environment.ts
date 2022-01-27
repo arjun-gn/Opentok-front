@@ -4,15 +4,18 @@
 
 export const environment = {
   production: false,
-  firebaseConfig : {
-    apiKey: "AIzaSyBT4IbSREiLYOh8tuat1nEr39IFLiqhedM",
-    authDomain: "opentok-archive.firebaseapp.com",
-    projectId: "opentok-archive",
-    storageBucket: "opentok-archive.appspot.com",
-    messagingSenderId: "506680134260",
-    appId: "1:506680134260:web:a01cccba0ae3f5241bdf21"
-  }
-
+  firebaseConfig: {
+    apiKey: 'AIzaSyBT4IbSREiLYOh8tuat1nEr39IFLiqhedM',
+    authDomain: 'opentok-archive.firebaseapp.com',
+    projectId: 'opentok-archive',
+    storageBucket: 'opentok-archive.appspot.com',
+    messagingSenderId: '506680134260',
+    appId: '1:506680134260:web:a01cccba0ae3f5241bdf21',
+  },
+  tokBox: {
+    API_KEY: '47430891',
+    API_SECRET: '6ed3f337e6f7a5609761d60d03caf7e748a4dc21',
+  },
 };
 
 /*

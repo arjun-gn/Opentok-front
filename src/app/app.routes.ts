@@ -2,12 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { HomeComponent } from './home/home.component';
-import { RecordingsComponent } from './recordings/recordings.component';
+import { ContactListComponent } from './pages/contact-list/contact-list.component';
+import { RecordingsComponent } from './pages/recordings/recordings.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  {path: 'recordings', component: RecordingsComponent}
+  { path: 'recordings', component: RecordingsComponent },
+  { path: 'contact-list', component: ContactListComponent },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],
