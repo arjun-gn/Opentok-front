@@ -11,7 +11,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -20,6 +24,8 @@ import { RecordingsComponent } from './pages/recordings/recordings.component';
 import { MatTableModule } from '@angular/material/table';
 import { ContactListComponent } from './pages/contact-list/contact-list.component';
 import { MatSortModule } from '@angular/material/sort';
+import { ContactModalComponent } from './components/contact-modal/contact-modal.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,8 +34,10 @@ import { MatSortModule } from '@angular/material/sort';
     AppComponent,
     RecordingsComponent,
     ContactListComponent,
+    ContactModalComponent,
   ],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     MatSidenavModule,
@@ -37,8 +45,12 @@ import { MatSortModule } from '@angular/material/sort';
     MatButtonModule,
     MatToolbarModule,
     MatTooltipModule,
+    MatPaginatorModule,
     MatTableModule,
+    MatDialogModule,
+    MatFormFieldModule,
     MatSortModule,
+    MatProgressSpinnerModule,
     HttpClientModule,
     MatIconModule,
     MatCardModule,

@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
 })
 export class SideNavComponent implements OnInit {
   showFiller = false;
-
+  isOpen:boolean = true
   constructor(private router:Router) { }
 
   ngOnInit(): void {
   }
-  showRecordings(){
-    this.router.navigateByUrl('recordings')
+  toggle(){
+    
   }
 }

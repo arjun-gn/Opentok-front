@@ -104,7 +104,7 @@ export class HomeComponent implements OnInit {
       this.startCall();
     } else {
       this.isVideoOn = !this.isVideoOn;
-      this.subscriber && this.subscriber.subscribeToVideo(this.isVideoOn);
+      // this.subscriber && this.subscriber.subscribeToVideo(this.isVideoOn);
       this.publisher && this.publisher.publishVideo(this.isVideoOn);
 
     }

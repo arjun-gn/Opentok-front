@@ -1,18 +1,39 @@
-.table-contain {
+.table-container {
   display: flex;
-  justify-content: center;
-
+  flex-direction: column;
+  align-items: center;
+  height: 88vh;
+  width: 100%;
+  overflow-y: scroll;
+  .spinner {
+    position: absolute;
+    top: 45%;
+    font-size: 20px;
+  }
   table {
-    margin-top: 10%;
-    width: 70%;
+    margin-top: 2rem;
+    width: 80%;
+    overflow: scroll;
 
     .action-btns {
-
       mat-icon {
         color: rgb(133, 133, 133);
         margin-right: 2rem;
         cursor: pointer;
+        &:hover {
+          color: rgb(82, 82, 82);
+        }
+        &:active {
+          color: rgb(190, 189, 189);
+        }
       }
     }
+  }
+}
+
+:host ::ng-deep {
+  mat-progress-spinner circle,
+  .mat-spinner circle {
+    stroke: #bec1d2 ;
   }
 }

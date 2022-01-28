@@ -25,7 +25,7 @@
   </mat-drawer>
 
   <mat-drawer-content class="drawer-content">
-    <mat-icon (click)="drawer.toggle()">
+    <mat-icon *ngIf="isOpen" (click)="drawer.toggle()" onclick="toggle()">
       menu
     </mat-icon>
     <router-outlet></router-outlet>
