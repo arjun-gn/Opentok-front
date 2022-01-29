@@ -26,7 +26,7 @@ import { ContactListComponent } from './pages/contact-list/contact-list.componen
 import { MatSortModule } from '@angular/material/sort';
 import { ContactModalComponent } from './components/contact-modal/contact-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   declarations: [
     SideNavComponent,
@@ -54,6 +54,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     MatIconModule,
     MatCardModule,
+    MatInputModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
   ],

@@ -16,6 +16,6 @@ export class NylasService {
     return this.http.get(this.baseUrl + 'messages');
   }
   deleteContact(id:string){
-    return this.http.get(this.baseUrl + `messages/${id}`);
+    return this.http.get(this.baseUrl + `contacts/${id}`);
   }
 }

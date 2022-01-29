@@ -6,6 +6,7 @@ export interface Session {
   layout: string
 }
 export interface ContactModel {
+  id:string;
   name: string;
   position: number;
   phone: number;

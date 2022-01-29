@@ -44,10 +44,13 @@ export class ContactListComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
   addContacts() {
+    console.log(this.allContacts);
+
     let index = 1;
     this.allContacts?.map((contact: any) => {
       if (contact.given_name) {
         CONTACT_DATA.push({
+          id:contact.id,
           position: index,
           name: contact.given_name ? contact.given_name : 'n/a',
           email: contact.emails[0] ? contact.emails[0]?.email : 'N/A',
@@ -62,15 +65,22 @@ export class ContactListComponent implements OnInit {
     });
   }
 
-  openDialog() {
+  openDialog(index:number) {
+    console.log(CONTACT_DATA[this.paginator.pageIndex * this.paginator.pageSize + index]);
     const dialogRef = this.dialog.open(ContactModalComponent, {
+      data: CONTACT_DATA[this.paginator.pageIndex * this.paginator.pageSize + index ],
+
       width: '30%',
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
   }
-  deleteContact(id: string) {
-    this.nylasService.deleteContact(id).subscribe(() => {});
+  deleteContact(element:any) {
+    console.log(element);
+
+    this.nylasService.deleteContact(element).subscribe((res) => {
+      console.log(res);
+    });
   }
 }
