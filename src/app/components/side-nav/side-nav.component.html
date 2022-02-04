@@ -21,6 +21,11 @@
           contacts
         </mat-icon>Contacts
       </button>
+      <button mat-button [routerLink]="['board']" (click)="drawer.toggle()">
+        <mat-icon>
+          content_paste
+        </mat-icon>Boards
+      </button>
     </div>
   </mat-drawer>
 

@@ -27,6 +27,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { ContactModalComponent } from './components/contact-modal/contact-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { BoardComponent } from './pages/board/board.component';
 @NgModule({
   declarations: [
     SideNavComponent,
@@ -35,6 +36,7 @@ import { MatInputModule } from '@angular/material/input';
     RecordingsComponent,
     ContactListComponent,
     ContactModalComponent,
+    BoardComponent,
   ],
   imports: [
     ReactiveFormsModule,

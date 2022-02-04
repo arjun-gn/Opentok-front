@@ -1,0 +1,19 @@
+<div class="board-container">
+  <mat-toolbar>
+    <span>My Board</span>
+    <span class="spacer"></span>
+    <button mat-raised-button>+ Add List</button>
+  </mat-toolbar>
+
+  <div class="listContainer">
+    <div class="list" *ngFor="let list of allLists;let i=index">
+      <div class="list-card">
+        <p>{{list.name | uppercase }}</p>
+
+        <button mat-raised-button class="add-card-btn" (click)="addCard(i)">+ Add Card</button>
+
+      </div>
+    </div>
+  </div>
+
+</div>

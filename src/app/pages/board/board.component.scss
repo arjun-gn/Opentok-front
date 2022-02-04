@@ -1,0 +1,20 @@
+.listContainer {
+  display: flex;
+
+  .list-card {
+    width: 200px;
+    min-height: 100px;
+    margin: 10px;
+    background-color: rgb(196, 219, 212);
+    padding: 15px 5px 5px 10px;
+    border-radius: 3px;
+    .add-card-btn {
+      position: relative;
+      bottom: 2px;
+    }
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
