@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -28,6 +29,7 @@ import { ContactModalComponent } from './components/contact-modal/contact-modal.
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { BoardComponent } from './pages/board/board.component';
+import { CardModalComponent } from './components/card-modal/card-modal.component';
 @NgModule({
   declarations: [
     SideNavComponent,
@@ -37,6 +39,7 @@ import { BoardComponent } from './pages/board/board.component';
     ContactListComponent,
     ContactModalComponent,
     BoardComponent,
+    CardModalComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -57,6 +60,7 @@ import { BoardComponent } from './pages/board/board.component';
     MatIconModule,
     MatCardModule,
     MatInputModule,
+    DragDropModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
   ],

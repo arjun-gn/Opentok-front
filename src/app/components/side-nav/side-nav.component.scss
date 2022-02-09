@@ -1,8 +1,11 @@
 .drawer-content{
   height: 100vh;
+  mat-toolbar{
+    background-color: rgb(223, 240, 235);
+    border-bottom: 1px solid rgb(124, 146, 145);
+    height: 50px;
+  }
 }
-
-
 
 .drawer {
   z-index: 0;

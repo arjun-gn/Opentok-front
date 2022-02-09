@@ -1,5 +1,5 @@
 <mat-drawer-container class="example-container">
-  <mat-drawer #drawer mode="side" opened>
+  <mat-drawer #drawer mode="side">
     <mat-toolbar class="header">
       <div>Menu</div>
       <mat-icon class="close" (click)="drawer.toggle()">close</mat-icon>
@@ -30,9 +30,12 @@
   </mat-drawer>
 
   <mat-drawer-content class="drawer-content">
-    <mat-icon *ngIf="isOpen" (click)="drawer.toggle()" onclick="toggle()">
-      menu
-    </mat-icon>
+    <mat-toolbar class="header">
+      <div>Menu</div>
+      <mat-icon *ngIf="isOpen" (click)="drawer.toggle()" onclick="toggle()">
+        menu
+      </mat-icon>
+    </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-drawer-content>
 </mat-drawer-container>

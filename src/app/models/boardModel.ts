@@ -1,12 +1,10 @@
 export interface Card {
+  _id:string
   title: string
   description: string
-  date: Date
-  listId: string
-  id: string
+  list_id: string
 }
 export interface List {
-  id:string;
+  _id: string;
   name: string;
-  date: Date;
 }
