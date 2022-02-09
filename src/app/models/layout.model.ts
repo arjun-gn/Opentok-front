@@ -20,9 +20,6 @@ export const LAYOUT_OPTIONS= {
   bigMaxRatio: 3/2,
   bigMinRatio: 9/16,
   bigFirst: true,
-
-
   window: window,
   ignoreClass: 'OT_ignore',
-  onLayout: null,
 };

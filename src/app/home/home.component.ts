@@ -1,11 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import * as OT from '@opentok/client';
 import initLayoutContainer from 'opentok-layout-js';
-import { environment } from 'src/environments/environment';
-import { Session } from '../models/genereal.model';
 import { FirebaseService } from '../services/firebase.service';
 import { OpentokService } from '../services/opentok.service';
-import { LAYOUT_OPTIONS } from '../models/layout.model';
 
 @Component({
   selector: 'app-home',
@@ -104,7 +101,7 @@ export class HomeComponent implements OnInit {
       this.startCall();
     } else {
       this.isVideoOn = !this.isVideoOn;
-      this.subscriber && this.subscriber.subscribeToVideo(this.isVideoOn);
+      // this.subscriber && this.subscriber.subscribeToVideo(this.isVideoOn);
       this.publisher && this.publisher.publishVideo(this.isVideoOn);
 
     }
@@ -136,6 +133,9 @@ export class HomeComponent implements OnInit {
       (err) => {
         if (!err) {
           this.addSub();
+        }
+        else{
+          this.endCall()
         }
       }
     );

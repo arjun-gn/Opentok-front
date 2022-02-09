@@ -1,19 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ContactModalComponent } from 'src/app/components/contact-modal/contact-modal.component';
 import { ContactModel } from 'src/app/models/genereal.model';
+import { NylasService } from 'src/app/services/nylas.service';
 
-
-const CONTACT_DATA: ContactModel[] = [
-  {
-    position: 1,
-    name: 'Jithin',
-    phone: 9785498314,
-    email: 'ksjgkjsa@ksajdf.com',
-  },
-  { position: 2, name: 'Suma', phone: 9784653218, email: 'oasdhf@asoelkm.com' },
-  { position: 3, name: 'Anish', phone: 6368944652, email: 'ksj.sjfd@lda.com' },
-];
+const CONTACT_DATA: ContactModel[] = [];
 
 @Component({
   selector: 'app-contact-list',
@@ -22,7 +16,10 @@ const CONTACT_DATA: ContactModel[] = [
 })
 export class ContactListComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  isLoading: boolean = false;
+  allContacts: any;
   displayedColumns: string[] = [
     'position',
     'name',
@@ -32,12 +29,58 @@ export class ContactListComponent implements OnInit {
     'communication_options',
   ];
   dataSource = new MatTableDataSource(CONTACT_DATA);
-  ngOnInit(): void {}
+  constructor(private nylasService: NylasService, public dialog: MatDialog) {}
+  ngOnInit(): void {
+    this.isLoading = true;
+    this.nylasService.getContacts().subscribe((res) => {
+      this.allContacts = res;
+      this.addContacts();
+      this.isLoading = false;
+    });
+  }
 
   ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  constructor() {
+  addContacts() {
+    console.log(this.allContacts);
+
+    let index = 1;
+    this.allContacts?.map((contact: any) => {
+      if (contact.given_name) {
+        CONTACT_DATA.push({
+          id:contact.id,
+          position: index,
+          name: contact.given_name ? contact.given_name : 'n/a',
+          email: contact.emails[0] ? contact.emails[0]?.email : 'N/A',
+          phone: contact.phone_numbers[0]
+            ? contact.phone_numbers[0]?.number
+            : 'N/A',
+        });
+        this.dataSource = new MatTableDataSource(CONTACT_DATA);
+        this.ngAfterViewInit();
+        index++;
+      }
+    });
   }
 
+  openDialog(index:number) {
+    console.log(CONTACT_DATA[this.paginator.pageIndex * this.paginator.pageSize + index]);
+    const dialogRef = this.dialog.open(ContactModalComponent, {
+      data: CONTACT_DATA[this.paginator.pageIndex * this.paginator.pageSize + index ],
+
+      width: '30%',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  deleteContact(element:any) {
+    console.log(element);
+
+    this.nylasService.deleteContact(element).subscribe((res) => {
+      console.log(res);
+    });
+  }
 }

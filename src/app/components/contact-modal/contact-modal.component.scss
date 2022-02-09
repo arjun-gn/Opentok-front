@@ -1,0 +1,28 @@
+.contact-card {
+  .form-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  button {
+    width: fit-content;
+    min-width: 10rem;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  mat-form-field {
+    width: calc(100% - 2rem);
+    flex-grow: 1;
+    .field-text-area {
+      width: 80%;
+    }
+  }
+  .mat-form-field-underline {
+    display: none !important;
+  }
+}
+::ng-deep {
+  .mat-dialog-container {
+    padding: 0;
+  }
+}

@@ -1,0 +1,73 @@
+<mat-toolbar class='table-toolbar' color="primary">
+  <mat-icon>contacts</mat-icon>
+  <span>&nbsp; My Contacts</span>
+  <span class="example-spacer"></span>
+</mat-toolbar>
+
+<form class="contact-card-container" [formGroup]="contactForm">
+  <mat-card class="contact-card">
+    <div class="form-wrapper">
+
+      <mat-form-field class="form-field-content bg-white" appearance="outline">
+        <mat-label>Name</mat-label>
+        <input type="text" matInput formControlName="name" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="!contactForm.get('name')?.valid">
+          Please Enter Name
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field-content" appearance="outline">
+        <mat-label>Title</mat-label>
+        <input type="text" matInput placeholder="+91" formControlName="title" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="!contactForm.get('title')?.valid">
+          Please Enter a Title
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field-content" appearance="outline">
+        <mat-label>Email 1</mat-label>
+        <input type="text" matInput formControlName="email" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="!contactForm.get('email')?.valid">
+          Please Enter a Valid Email
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field-content" appearance="outline">
+        <mat-label>Email 2</mat-label>
+        <input type="text" matInput formControlName="email2">
+        <mat-error *ngIf="!contactForm.get('email2')?.valid">
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Office Phone</mat-label>
+        <input type="text" matInput formControlName="officePhone" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="!contactForm.get('officePhone')?.valid">
+          Please Enter a Valid Number
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field-content bg-white " appearance="outline">
+        <mat-label>Mobile Phone</mat-label>
+        <input type="text" matInput formControlName="phone" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="!contactForm.get('phone')?.valid">
+          Please Enter a Valid Mobile Number
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field-content" appearance="outline">
+        <mat-label>Company Name</mat-label>
+        <input type="text" matInput formControlName="companyName" [errorStateMatcher]="matcher">
+        <mat-error *ngIf="!contactForm.get('companyName')?.valid"> </mat-error>
+      </mat-form-field>
+
+
+      <div class="button-section">
+        <button mat-raised-button color="primary" class="save-btn bg-primary"
+        [disabled]="!contactForm.valid">Save</button>
+        <button mat-raised-button class="cancel-btn bg-white" (click)="closeModal()">Cancel</button>
+      </div>
+
+    </div>
+  </mat-card>
+</form>

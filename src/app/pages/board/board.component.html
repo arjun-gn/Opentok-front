@@ -1,0 +1,33 @@
+<div class="board-container">
+  <mat-toolbar>
+    <span>My Board</span>
+    <span class="spacer"></span>
+    <button mat-raised-button (click)="openListDialog()">+ Add List</button>
+  </mat-toolbar>
+
+  <div class="listContainer">
+    <div class="list " *ngFor="let list of allLists;let i=index" cdkDropList [cdkDropListData]="allLists"
+      (cdkDropListDropped)="drop($event)">
+      <div class="list-card">
+        <div class="list-header">
+          <p>{{list.name | uppercase }}</p>
+          <span class="spacer"></span>
+          <mat-icon>edit</mat-icon>
+          <mat-icon (click)='deleteList(list._id)'>delete</mat-icon>
+          </div>
+          <div class="card-container" *ngFor="let card of allCards;let c = index" cdkDrag>
+            <div class="cards" *ngIf="card.list_id === list._id">
+              <p>{{card.title| uppercase }}</p>
+              <p>{{card.description }}</p>
+              <div class="card-icons">
+                <mat-icon>edit</mat-icon>
+                <mat-icon (click)='deleteCard(card._id)'>delete</mat-icon>
+              </div>
+            </div>
+          </div>
+          <button mat-raised-button class="add-card-btn" (click)="openCardDialog(i)">+ Add Card</button>
+      </div>
+    </div>
+  </div>
+
+</div>
