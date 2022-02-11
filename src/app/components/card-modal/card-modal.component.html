@@ -1,7 +1,9 @@
 <div class="main-container  ">
 
     <mat-toolbar>
-        <span>Add Card</span>
+        <span *ngIf="modelType==='card'">Add Card</span>
+        <span *ngIf="modelType==='list'">Add List</span>
+
         <span class="spacer"></span>
         <mat-icon (click)="closeCard()">close</mat-icon>
     </mat-toolbar>
