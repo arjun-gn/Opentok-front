@@ -10,7 +10,7 @@
     border-radius: 3px;
     position: relative;
     text-align: center;
-    mat-icon{
+    mat-icon {
       &:hover {
         color: rgb(116, 116, 116);
       }
@@ -20,6 +20,9 @@
     }
     .list-header {
       display: flex;
+    }
+    .card-container {
+      cursor: pointer;
     }
     .cards {
       width: 160px;
@@ -48,6 +51,9 @@
   }
 }
 
-::ng-deep mat-dialog-container {
-  padding: 0px !important;
+::ng-deep {
+  mat-dialog-container {
+    padding: 0px !important;
+  }
+
 }
