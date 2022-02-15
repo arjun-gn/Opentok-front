@@ -1,4 +1,8 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CardModalComponent } from 'src/app/components/card-modal/card-modal.component';
@@ -13,6 +17,7 @@ import { BoardService } from 'src/app/services/board.service';
 export class BoardComponent implements OnInit {
   allLists: List[] = [];
   allCards: Card[] = [];
+  dropList: string[] = [];
   constructor(private boardService: BoardService, public dialog: MatDialog) {}
   ngOnInit(): void {
     this.getAllLists();
@@ -22,6 +27,9 @@ export class BoardComponent implements OnInit {
   getAllLists() {
     this.boardService.getAllLists().subscribe((res: any) => {
       this.allLists = res.data.allLists;
+      this.allLists.map((list: List) => {
+        this.dropList.push(list._id);
+      });
     });
   }
 
@@ -76,37 +84,36 @@ export class BoardComponent implements OnInit {
   }
   deleteCard(id: string) {
     this.boardService.deleteCard(id).subscribe((res: any) => {
-      console.log(`card ${id} deleted`);
-
       this.getAllCards();
     });
   }
   deleteList(id: string) {
     this.boardService.deleteList(id).subscribe((res: any) => {
-      console.log(
-        'list deleted'
-      );
-      this.allCards.map(card=>{
-        if(card.list_id === id){
-          this.deleteCard(card._id)
+      this.allCards.map((card) => {
+        if (card.list_id === id) {
+          this.deleteCard(card._id);
         }
-      })
+      });
 
-      this.getAllLists()
+      this.getAllLists();
     });
   }
 
-  drop(event: CdkDragDrop<List[]>){
-    console.log(event);
+  drop(event: CdkDragDrop<List[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     } else {
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex,
+        event.currentIndex
       );
+      this.allCards[event.item.data].list_id = event.container.id;
     }
   }
 }
