@@ -14,8 +14,11 @@ export class BoardService {
   createList(listData: {}) {
     return this.http.post(this.baseUrl, listData);
   }
-  deleteList(id:string){
-    return this.http.delete(this.baseUrl + id)
+  deleteList(id: string) {
+    return this.http.delete(this.baseUrl + id);
+  }
+  updateList(id: string, data: {}) {
+    return this.http.patch(this.baseUrl + id, data);
   }
   getAllCards() {
     return this.http.get(this.baseUrl + 'cards');
@@ -23,8 +26,10 @@ export class BoardService {
   createCard(cardData: {}) {
     return this.http.post(this.baseUrl + 'cards', cardData);
   }
-  deleteCard(id:string){
-    return this.http.delete(this.baseUrl + `card/${id}`)
+  deleteCard(id: string) {
+    return this.http.delete(this.baseUrl + `card/${id}`);
   }
-
+  updateCard(id: string, data: {}) {
+    return this.http.patch(this.baseUrl + `card/${id}`, data);
+  }
 }

@@ -113,7 +113,13 @@ export class BoardComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-      this.allCards[event.item.data].list_id = event.container.id;
+      this.boardService
+        .updateCard(this.allCards[event.item.data]._id, {
+          list_id: event.container.id,
+        })
+        .subscribe((res: any) => {
+          this.getAllCards();
+        });
     }
   }
 }

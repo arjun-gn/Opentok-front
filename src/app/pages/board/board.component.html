@@ -6,7 +6,7 @@
   </mat-toolbar>
 
   <div class="listContainer">
-    <div class="list " *ngFor="let list of allLists;let i=index">
+    <div class="list" *ngFor="let list of allLists;let i=index">
       <div [id]="list._id" class="list-card" [cdkDropListConnectedTo]="dropList" cdkDropList
         [cdkDropListData]="allLists" (cdkDropListDropped)="drop($event)">
         <div class="list-header">
@@ -15,8 +15,8 @@
           <mat-icon>edit</mat-icon>
           <mat-icon (click)='deleteList(list._id)'>delete</mat-icon>
         </div>
-        <div class=" card-container" *ngFor="let card of allCards;let c = index" cdkDrag [cdkDragData]="c">
-          <div class="cards" *ngIf="card.list_id === list._id">
+        <div class="card-container"  *ngFor="let card of allCards;let c = index" [ngClass]="{'cards': card.list_id === list._id}" cdkDrag [cdkDragData]="c">
+          <div class="card-sub-container" *ngIf="card.list_id === list._id" >
             <p>{{card.title| uppercase }}</p>
             <p>{{card.description }}</p>
             <div class="card-icons">
